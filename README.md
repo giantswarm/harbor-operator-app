@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/harbor-operator-app.svg?style=shield)](https://circleci.com/gh/giantswarm/harbor-operator-app)
+[![CircleCI](https://circleci.com/gh/giantswarm/cluster-autoscaler-app.svg?style=shield)](https://circleci.com/gh/giantswarm/cluster-autoscaler-app)
 
 # harbor-operator-app chart
 
