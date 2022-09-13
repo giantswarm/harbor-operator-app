@@ -1,4 +1,0 @@
-chart-dirs: 
-  - https://operator.min.io/
-  - https://spotahome.github.io/redis-operator
-  - https://opensource.zalando.com/postgres-operator/charts/postgres-operator
