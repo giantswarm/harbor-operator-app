@@ -23,18 +23,18 @@ dependencies:
 - name: operator
   version: 4.4.28
   condition: minio-operator.enabled
-  repository: https://operator.min.io/
+  repository: "file://../charts/operator-4.4.28.tgz"
   tags:
     - storage
 - name: redis-operator
   version: 3.1.4
   condition: redis-operator.enabled
-  repository: https://spotahome.github.io/redis-operator
+  repository: "file://../charts/redis-operator-3.1.4.tgz"
   tags:
     - cache
 - name: postgres-operator
   version: 1.6.3
   condition: postgres-operator.enabled
-  repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+  repository: "file://../charts/postgres-operator-1.6.3.tgz"
   tags:
     - database
