@@ -23,18 +23,18 @@ dependencies:
 - name: operator
   version: 4.4.28
   condition: minio-operator.enabled
-  repository: "file://charts/operator-4.4.28.tgz"
+  repository: "file://charts/operator"
   tags:
     - storage
 - name: redis-operator
   version: 3.1.4
   condition: redis-operator.enabled
-  repository: "file://charts/redis-operator-3.1.4.tgz"
+  repository: "file://charts/redis-operator"
   tags:
     - cache
 - name: postgres-operator
   version: 1.6.3
   condition: postgres-operator.enabled
-  repository: "file://charts/postgres-operator-1.6.3.tgz"
+  repository: "file://charts/postgres-operator"
   tags:
     - database
