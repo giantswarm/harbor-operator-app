@@ -1,0 +1,58 @@
+name: Dev Image
+
+on:
+  push:
+    branches:
+    - master
+    - release-*
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+    - uses: actions/checkout@v2
+    - name: Build manager
+      run: |
+        mkdir ./target
+        echo -n "dev_${GITHUB_REF##refs/*/}" > ./target/TAG_NAME
+        make dist/harbor-operator_linux_amd64/manager GIT_COMMIT=${{ github.sha }} RELEASE_VERSION=`cat ./target/TAG_NAME`
+    - name: Docker Build & Push to Docker Hub
+      uses: opspresso/action-docker@master
+      with:
+        args: --docker
+      env:
+        BUILD_PATH: dist/harbor-operator_linux_amd64
+        DOCKERFILE: Dockerfile
+        USERNAME: '${{ secrets.DOCKER_USER }}'
+        PASSWORD: '${{ secrets.DOCKER_TOKEN }}'
+        IMAGE_NAME: goharbor/harbor-operator
+        LATEST: 'false'
+    - name: Docker Build & Push to GHCR
+      uses: opspresso/action-docker@master
+      with:
+        args: --docker
+      env:
+        BUILD_PATH: dist/harbor-operator_linux_amd64
+        DOCKERFILE: Dockerfile
+        USERNAME: harbor
+        PASSWORD: '${{ secrets.GHCR_TOKEN }}'
+        REGISTRY: ghcr.io
+        IMAGE_NAME: goharbor/harbor-operator
+        LATEST: 'false'
+
+  charts:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+    - uses: actions/checkout@v2
+    - name: Package charts
+      run: make helm-generate
+    - uses: actions/upload-artifact@v2
+      with:
+        name: charts
+        path: charts/*.tgz
