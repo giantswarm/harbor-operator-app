@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: [[ .Version ]]
+version: 1.3.0
 
 kubeVersion: '>= 1.16.0-0'
 
@@ -23,18 +23,18 @@ dependencies:
 - name: operator
   version: 4.4.28
   condition: minio-operator.enabled
-  repository: "https://operator.min.io/"
+  repository: "file://charts/operator"
   tags:
     - storage
 - name: redis-operator
   version: 3.1.4
   condition: redis-operator.enabled
-  repository: "https://spotahome.github.io/redis-operator"
+  repository: "file://charts/postgres-operator"
   tags:
     - cache
 - name: postgres-operator
   version: 1.6.3
   condition: postgres-operator.enabled
-  repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
+  repository: "file://charts/postgres-operator"
   tags:
     - database
