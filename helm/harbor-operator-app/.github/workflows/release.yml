@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - # required for the changelog to work correctly
+      run: git fetch --prune --unshallow
+    - uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+    - name: prepare changelog
+      run: |
+        tag=${{ github.ref }}
+        tag=${tag##*/}
+        cat <<EOF | tee /tmp/release.txt
+        ## Docker images
+
+        - \`docker pull goharbor/harbor-operator:$tag\`
+        EOF
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v3
+      with:
+        gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v1
+      with:
+        version: v1.11.0
+        args: release --rm-dist --release-footer /tmp/release.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+        GIT_COMMIT: ${{ github.sha }}
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+      - uses: actions/checkout@v2
+      - name: Build manager
+        run: |
+          mkdir ./target
+          echo -n "${GITHUB_REF##refs/*/}" > ./target/TAG_NAME
+          make dist/harbor-operator_linux_amd64/manager GIT_COMMIT=${{ github.sha }} RELEASE_VERSION=`cat ./target/TAG_NAME`
+      - name: Docker Build & Push to Docker Hub
+        uses: opspresso/action-docker@master
+        with:
+          args: --docker
+        env:
+          BUILD_PATH: dist/harbor-operator_linux_amd64
+          DOCKERFILE: Dockerfile
+          USERNAME: '${{ secrets.DOCKER_USER }}'
+          PASSWORD: '${{ secrets.DOCKER_TOKEN }}'
+          IMAGE_NAME: goharbor/harbor-operator
+          LATEST: true
+      - name: Docker Build & Push to GHCR
+        uses: opspresso/action-docker@master
+        with:
+          args: --docker
+        env:
+          BUILD_PATH: dist/harbor-operator_linux_amd64
+          DOCKERFILE: Dockerfile
+          USERNAME: harbor
+          PASSWORD: '${{ secrets.GHCR_TOKEN }}'
+          REGISTRY: ghcr.io
+          IMAGE_NAME: goharbor/harbor-operator
+          LATEST: true
