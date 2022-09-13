@@ -251,17 +251,17 @@ affinity: {}
 
 redis-operator:
   # redis-operator.enabled -- Whether to enabled [Redis Operator](https://github.com/spotahome/redis-operator)
-  enabled: false
+  enabled: true
   image:
     tag: v1.1.1
 
 minio-operator:
   # minio-operator.enabled -- Whether to enabled [MinIO Operator](https://github.com/minio/operator)
-  enabled: false
+  enabled: true
 
 postgres-operator:
   # postgres-operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
-  enabled: false
+  enabled: true
 
   configKubernetes:
     secret_name_template: "{username}.{cluster}.credentials"
