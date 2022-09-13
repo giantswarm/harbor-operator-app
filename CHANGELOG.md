@@ -7,4 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/giantswarm/REPOSITORY_NAME/tree/master
+- changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
+
+[Unreleased]: https://github.com/giantswarm/{APP-NAME}/tree/main
