@@ -13,5 +13,5 @@ lint-chart: ## Runs ct against the default chart.
 	mkdir -p /tmp/$(APPLICATION)-test/helm
 	cp -a ./helm/$(APPLICATION) /tmp/$(APPLICATION)-test/helm/
 	architect helm template --dir /tmp/$(APPLICATION)-test/helm/$(APPLICATION)
-	docker run -it --rm -v /tmp/$(APPLICATION)-test:/wd --workdir=/wd --name ct $(IMAGE) ct lint --validate-maintainers=false --charts="helm/$(APPLICATION)" 
+	docker run -it --rm -v /tmp/$(APPLICATION)-test:/wd --workdir=/wd --name ct $(IMAGE) ct lint --validate-maintainers=false --charts="helm/$(APPLICATION)"
 	rm -rf /tmp/$(APPLICATION)-test
