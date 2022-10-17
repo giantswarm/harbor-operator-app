@@ -72,7 +72,7 @@ Database Login is primarily used to log in as an admin. When logged in as an adm
 
 If you create users in the database without using `Configuration` to set up OIDC you will be unable to switch your mode of authentication, and will have to reinstall Harbor to do so. 
 
-### Configuring database log in credentials
+## Configuring database log in credentials
 
 By default the harbor instance will start with by using Database Login with the default admin credentials. These are:
 
