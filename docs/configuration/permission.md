@@ -1,6 +1,6 @@
 # Harbor user permissions
 
-By default users without administrator priveleges can create projects and view logs.
+By default users without administrator privileges can create projects and view logs.
 
 On public projects all users will be able to see the list of repositories, images, image vulnerabilities, helm charts and helm chart versions, pull images, retag images (need push permission for destination image), download helm charts, download helm chart versions.
 
