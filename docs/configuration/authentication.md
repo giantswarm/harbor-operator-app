@@ -42,7 +42,7 @@ Here we use google as our OIDC provider. This involved creating a new project on
 
 The page to do so:
 
-`https://console.cloud.google.com/apis`
+https://console.cloud.google.com/apis
 
 Once you've access to a client secret, pass it into a definition for a secret object and reference it in the HarborConfiguration CRD. This CRD also contains the correct endpoint and the client ID. 
 
@@ -51,6 +51,9 @@ In the future we may use Dex as a shim to Github instead.
 **Note**
 
 Once an authentication method has been chosen you cannot switch between them. You can however update your OIDC settings due to the CRDs idempotent behaviour. 
+
+
+Screenshots of the UI configuration: https://docs.google.com/document/d/1CsJj45dk2YzcWIGzPbb4Y7TuPu0CSgbZKMM6KUAGIU8
 
 ## Database Login
 
@@ -70,11 +73,11 @@ Database Login is primarily used to log in as an admin. When logged in as an adm
 
 **Note**
 
-If you create users in the database without using `Configuration` to set up OIDC you will be unable to switch your mode of authentication, and will have to reinstall Harbor to do so. 
+If you create users in the database without using `Configuration` to set up OIDC you will be unable to switch your mode of authentication, and will have to reinstall Harbor to do so.
 
 ## Configuring database log in credentials
 
-By default the harbor instance will start with by using Database Login with the default admin credentials. These are:
+By default the harbor instance will start by using Database Login with the default admin credentials. These are:
 
 ```
 Username: admin

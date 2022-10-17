@@ -1,5 +1,3 @@
-
-
 ## Values for your configmap.yaml
 
 | Key | Type | Default | Description |
