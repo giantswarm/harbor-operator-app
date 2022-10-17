@@ -1,4 +1,4 @@
-## Harbor user permissions
+# Harbor user permissions
 
 By default users without administrator priveleges can create projects and view logs.
 
@@ -22,49 +22,50 @@ ProjectAdmin: When creating a new project, you will be assigned the “ProjectAd
 
 The following table depicts the various user permission levels in a project.
 
-Action	Limited Guest	Guest	Developer	Maintainer	Project Admin
-See the project configurations	✓	✓	✓	✓	✓
-Edit the project configurations					✓
-See a list of project members		✓	✓	✓	✓
-Create/edit/delete project members					✓
-See a list of project logs		✓	✓	✓	✓
-See a list of project replications				✓	✓
-See a list of project replication jobs					✓
-See a list of project labels				✓	✓
-Create/edit/delete project labels				✓	✓
-See a list of repositories	✓	✓	✓	✓	✓
-Create repositories			✓	✓	✓
-Edit/delete repositories				✓	✓
-See a list of images	✓	✓	✓	✓	✓
-Retag image		✓	✓	✓	✓
-Pull image	✓	✓	✓	✓	✓
-Push image			✓	✓	✓
-Scan/delete image				✓	✓
-Add scanners to Harbor					
-Edit scanners in projects					✓
-See a list of image vulnerabilities	✓	✓	✓	✓	✓
-See image build history	✓	✓	✓	✓	✓
-Add/Remove labels of image			✓	✓	✓
-See a list of helm charts	✓	✓	✓	✓	✓
-Download helm charts	✓	✓	✓	✓	✓
-Upload helm charts			✓	✓	✓
-Delete helm charts				✓	✓
-See a list of helm chart versions	✓	✓	✓	✓	✓
-Download helm chart versions	✓	✓	✓	✓	✓
-Upload helm chart versions			✓	✓	✓
-Delete helm chart versions				✓	✓
-Add/Remove labels of helm chart version			✓	✓	✓
-See a list of project robots				✓	✓
-Create/edit/delete project robots					✓
-See configured CVE whitelist	✓	✓	✓	✓	✓
-Create/edit/remove CVE whitelist					✓
-Enable/disable webhooks			✓	✓	✓
-Create/delete tag retention rules			✓	✓	✓
-Enable/disable tag retention rules			✓	✓	✓
-Create/delete tag immutability rules				✓	✓
-Enable/disable tag immutability rules				✓	✓
-See project quotas	✓	✓	✓	✓	✓
-Edit project quotas *					
+| Action | Limited Guest | Guest | Developer | Maintainer | Project Admin |
+|--------|---------------|-------|-----------|------------|---------------|
+| See the project configurations | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Edit the project configurations |	| | | |	✓ |
+| See a list of project members	 | | ✓ | ✓ | ✓ | ✓ |
+| Create/edit/delete project members | | | | | ✓ |
+| See a list of project logs | | ✓ | ✓ | ✓ | ✓ |
+| See a list of project replications | | | | ✓ | ✓ |
+| See a list of project replication jobs | | | | | ✓ |
+| See a list of project labels | | | | ✓ | ✓ |
+| Create/edit/delete project labels | | | | ✓ | ✓ |
+| See a list of repositories | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Create repositories |  |  | ✓ | ✓ | ✓ |
+| Edit/delete repositories | | | | ✓ | ✓ |
+| See a list of images | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Retag image | | ✓ | ✓ | ✓ | ✓ |
+| Pull image | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Push image |  |  | ✓ | ✓ | ✓ |
+| Scan/delete image	| | | | ✓ | ✓ |
+| Add scanners to Harbor |  |  |  |  |  |				
+| Edit scanners in projects | | | | | ✓ |
+| See a list of image vulnerabilities | ✓ | ✓ | ✓ | ✓ | ✓ |
+| See image build history | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Add/Remove labels of image |  |  | ✓ | ✓ | ✓ |
+| See a list of helm charts | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Download helm charts | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Upload helm charts |  |  | ✓ | ✓ | ✓ |
+| Delete helm charts | | | | ✓ | ✓ |
+| See a list of helm chart versions | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Download helm chart versions | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Upload helm chart versions |  |  | ✓ | ✓ | ✓ |
+| Delete helm chart versions |  |  |  | ✓ | ✓ |
+| Add/Remove labels of helm chart version |  |  | ✓ | ✓ | ✓ |
+| See a list of project robots |  |  |  | ✓ | ✓ |
+| Create/edit/delete project robots	|  |  |  |  | ✓ |
+| See configured CVE whitelist | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Create/edit/remove CVE whitelist |  |  |  |  | ✓ |
+| Enable/disable webhooks |  |  | ✓ | ✓ | ✓ |
+| Create/delete tag retention rules |  |  | ✓ | ✓ | ✓ |
+| Enable/disable tag retention rules |  |  | ✓ | ✓ | ✓ |
+| Create/delete tag immutability rules |  |  |  | ✓ | ✓ |
+| Enable/disable tag immutability rules |  |  |  | ✓ | ✓ |
+| See project quotas | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Edit project quotas | * |				
 * Only the Harbor system administrator can edit project quotas and add new scanners.
 
 ## Summary
