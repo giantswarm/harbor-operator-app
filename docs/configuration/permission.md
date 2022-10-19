@@ -1,6 +1,6 @@
 # Harbor user permissions
 
-By default users without administrator priveleges can create projects and view logs.
+By default users without administrator privileges can create projects and view logs.
 
 On public projects all users will be able to see the list of repositories, images, image vulnerabilities, helm charts and helm chart versions, pull images, retag images (need push permission for destination image), download helm charts, download helm chart versions.
 
@@ -8,15 +8,15 @@ On public projects all users will be able to see the list of repositories, image
 
 Harbor manages images through projects. You provide access to these images to users by including the users in projects and assigning one of the following roles to them.
 
-Limited Guest: A Limited Guest does not have full read privileges for a project. They can pull images but cannot push, and they cannot see logs or the other members of a project. For example, you can create limited guests for users from different organizations who share access to a project.
+**Limited Guest**: A Limited Guest does not have full read privileges for a project. They can pull images but cannot push, and they cannot see logs or the other members of a project. For example, you can create limited guests for users from different organizations who share access to a project.
 
-Guest: Guest has read-only privilege for a specified project. They can pull and retag images, but cannot push.
+**Guest**: Guest has read-only privilege for a specified project. They can pull and retag images, but cannot push.
 
-Developer: Developer has read and write privileges for a project.
+**Developer**: Developer has read and write privileges for a project.
 
-Maintainer: Maintainer has elevated permissions beyond those of ‘Developer’ including the ability to scan images, view replications jobs, and delete images and helm charts.
+**Maintainer**: Maintainer has elevated permissions beyond those of ‘Developer’ including the ability to scan images, view replications jobs, and delete images and helm charts.
 
-ProjectAdmin: When creating a new project, you will be assigned the “ProjectAdmin” role to the project. Besides read-write privileges, the “ProjectAdmin” also has some management privileges, such as adding and removing members, starting a vulnerability scan.
+**ProjectAdmin**: When creating a new project, you will be assigned the “ProjectAdmin” role to the project. Besides read-write privileges, the “ProjectAdmin” also has some management privileges, such as adding and removing members, starting a vulnerability scan.
 
 ## Project members permissions
 
@@ -68,8 +68,16 @@ The following table depicts the various user permission levels in a project.
 | Edit project quotas | * |				
 * Only the Harbor system administrator can edit project quotas and add new scanners.
 
+## Groups vs users
+
+If you wish to configure a particular group of users you must first group them on the OIDC side of your provider. From there you can give the group privileges the same way you would for a regular user. This can also be done for LDAP.
+
+## Automatic options
+
+Currently, we have been able to configure this through the UI by selecting a project and then the members drop down box. In order to do set privileges automatically we could use API calls from `member` or we could create a CRD to configure this.
+
 ## Summary
 
-Harbor system administrator (logging in as admin throguh the db), have the highest level of user privilege. They are able to set up projects, endpoints and replication rules through the UI. They can also manage other users and grant them the same Harbor system administrator privilges. 
+Harbor system administrator (logging in as admin throguh the databaw), have the highest level of user privilege. They are able to set up projects, endpoints and replication rules through the UI. They can also manage other users and grant them the same Harbor system administrator privilges. 
 
-Otherwise, managing users permissions generally is accomplished by assigning them to projects and then choosing their role within their project. Their role will dictate their permissions, as outlined by the table above. 
+Otherwise, managing users permissions generally is accomplished by assigning them to projects and then choosing their role within their project. Their role will dictate their permissions, as outlined by the table above.
