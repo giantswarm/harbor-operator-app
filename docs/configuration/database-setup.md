@@ -69,6 +69,9 @@ https://github.com/goharbor/harbor-operator/blob/master/docs/CRD/custom-resource
 For configuring the fullstack.yaml:
 https://github.com/goharbor/harbor-operator/blob/master/manifests/samples/full_stack.yaml
 
+Configure database using configmaps:
+https://github.com/goharbor/harbor-operator/blob/master/docs/installation/customize-storage-db-redis.md
+
 # External postgres setup
 
 ## Summary
