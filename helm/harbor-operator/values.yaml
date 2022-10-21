@@ -7,7 +7,7 @@ image:
   tag: "dev_master"
 
 # installCRDs -- If true, CRD resources will be installed as part of the Helm chart. If enabled, when uninstalling CRD resources will be deleted causing all installed custom resources to be DELETED
-installCRDs: false
+installCRDs: true
 
 nameOverride: ""
 fullnameOverride: ""
@@ -38,7 +38,7 @@ serviceAccount:
 
 # logLevel -- Set the verbosity of controller. Range of 0 - 6 with 6 being the most verbose.
 # Info level is 4.
-logLevel: 4
+logLevel: 6
 
 leaderElection:
   # leaderElection.namespace -- The namespace used to store the ConfigMap for leader election
@@ -251,7 +251,7 @@ affinity: {}
 
 redis-operator:
   # redis-operator.enabled -- Whether to enabled [Redis Operator](https://github.com/spotahome/redis-operator)
-  enabled: false
+  enabled: true
   image:
     tag: v1.1.1
 
@@ -261,7 +261,7 @@ minio-operator:
 
 postgres-operator:
   # postgres-operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
-  enabled: false
+  enabled: true
 
   configKubernetes:
     secret_name_template: "{username}.{cluster}.credentials"

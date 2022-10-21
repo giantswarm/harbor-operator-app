@@ -9,4 +9,4 @@ dependencies:
   repository: file://charts/postgres-operator
   version: 1.6.3
 digest: sha256:178a5d2e6e3db021a33055bcfec30f00b1032c0533cecbf55b51fac9bf6cc4b1
-generated: "2022-09-13T20:08:26.248179+02:00"
+generated: "2022-09-22T12:39:15.006188+02:00"
