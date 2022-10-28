@@ -25,4 +25,5 @@ data:
 {{ toYaml .Values.configLoggingRestApi | indent 2 }}
 {{ toYaml .Values.configTeamsApi | indent 2 }}
 {{ toYaml .Values.configConnectionPooler | indent 2 }}
+{{ toYaml .Values.configWALBackup | indent 2 }}
 {{- end }}
