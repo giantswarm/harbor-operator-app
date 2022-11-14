@@ -163,7 +163,7 @@ While this should work as it is, we encountered some bottlenecks as we implement
 
    `Solution:` `This is a possible solution that needs to be pushed upstream`.
 
-    I had to edit the postgres operator CR and included the following under the patroni:pg_hba section and restarted the pods to make it work.
+    To resolve this, edit the postgres operator CR and included the following under the patroni:pg_hba section and delete the pods.
     
     PS: This is not a sustainable solution as it requires a manual intervention anytime a harbor cluster is created
 
@@ -177,3 +177,6 @@ While this should work as it is, we encountered some bottlenecks as we implement
     - hostssl all             +zalandos    all                pam
     - hostssl all             all                all                md5
    ```
+3. `Problem: ` The clone_with_wale.py script doesn't use the right s3 path to download the backups for restoration
+
+   `Solution: ` The "CLONE_AWS_ENDPOINT" environment variable affects the s3 path so remove it if you have it
