@@ -29,7 +29,10 @@ Setting these parameters will make sure the postgres creates backups in the spec
 
 Follow these steps to create a harbor cluster with backup enabled on a GiantSwarm Management cluster
 
-1. Create a config map the `application.giantswarm.io/v1alpha1` App CR will use to configure the harbor operator helm chart
+1. Create a namespace
+   `kubectl create ns harbor-operator-ns`
+
+2. Create a config map the `application.giantswarm.io/v1alpha1` App CR will use to configure the harbor operator helm chart
    
 ```
 apiVersion: v1
@@ -58,7 +61,7 @@ data:
         aws_region: us-east-1
         wal_s3_bucket: <bucket name in s3 used for storing postgres backup>
  ```
-2. Create the APP custom resource for harbor operator
+3. Create the APP custom resource for harbor operator
 
 ```
 apiVersion: application.giantswarm.io/v1alpha1
@@ -81,7 +84,7 @@ spec:
       namespace: "harbor-operator-ns"
   version: 0.0.0-c0b7706dbb0aaaa608ea25ed0f0ab14fa4a733db # Version of a recent helm chart artifact
 ```
-3. Create the configmap used by the postgres operator to configure postgres pods, this should correlate with the
+4. Create the configmap used by the postgres operator to configure postgres pods, this should correlate with the
    `pod_environment_configmap` value set in step 1.
 ```
 apiVersion: v1
@@ -101,7 +104,7 @@ data:
   WALE_DISABLE_S3_SSE: "true"
 ```
 
-4. Create the Harbor CR
+5. Create the Harbor CR
    1. Create a new namespace to deploy harbor in 
       `kubectl create namespace harbor-cluster`
    2. Create a txt file that holds your AWS secretkey and create a kubernetes secret using the file
@@ -132,12 +135,12 @@ In other to restore backups from s3 these are the steps to follow:
    The "creationTimestamp", "ownerReferences", "resourceVersion" and "uid" sections can be removed from the yaml file.
 2. Include the following parameters to the `pod-config` configmap used to create the initial cluster to tell the postgres operator to restore from an existing backup
    ```
-   CLONE_SCOPE: ""
+   CLONE_SCOPE: "" # The name of the cluster you want to clone, ideally it is the folder name within the spilo folder in s3
    CLONE_METHOD: "CLONE_WITH_WALE"
-   CLONE_HOST: ""
+   CLONE_HOST: "" # The same value as CLONE_SCOPE
    CLONE_USER: "postgres"
-   CLONE_WAL_S3_BUCKET: ""
-   CLONE_WAL_BUCKET_SCOPE_SUFFIX: ""
+   CLONE_WAL_S3_BUCKET: "" # s3 bucket name the backup is stored in
+   CLONE_WAL_BUCKET_SCOPE_SUFFIX: "" # This is the id of the cluster, usually in the clone_scope folder in s3 (s3://<bucket-name>/spilo/<clone-scope>/<scope-suffix>) and it has to start with "/" e.g "/99e85b8a-3f92-4c86-8d42-5056348c1e7e"
    CLONE_PORT: "5432"
    CLONE_USE_WALG_RESTORE: "true"
    USEWALG_RESTORE: "true"
@@ -147,18 +150,18 @@ In other to restore backups from s3 these are the steps to follow:
    ```
 3. You can use this reference manifest file to configure the harbor cluster and it's dependencies [here](https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A)
 4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
-5. Delete the `harbor-operator-postgres-operator-*` pod in the `harbor-operator-ns` namespace.
-6. Go to the configured harbor url to confirm your old data has been restored
+5. Delete the `harbor-operator-postgres-operator-*` pod in the `harbor-operator-ns` namespace and wait for the pods to be recreated.
+6. Go to the configured harbor url to confirm your old data has been restored 
 
 <h2> Challenges faced while implementing this solution with Harbor Operator</h2>
 While this should work as it is, we encountered some bottlenecks as we implemented the solution. I'll list them and also mention ways we mitigated them
 
 1. `Problem:` The s3 path wasn't correct, majorly because the tools within the postgres pod (WALE, WALG, PATRONI) were outdated.
 
-    `Solution:` I updated the spilio image version used by the postgres operator to a more recent version and that fixed the issue.
+    `Solution:` Update the spilo image version used by the postgres operator to a more recent version and that should fix the issue.
 
 
-2. `Problem: ` `FATAL:  no pg_hba.conf entry for host "[local]", user "postgres", database "postgres", SSL off`. This was caused because the Harbor Operator harcoded the [pg_hba.config](https://github.com/goharbor/harbor-operator/blob/master/pkg/cluster/controllers/database/generate.go#L94) and 
+2. `Problem: ` `FATAL:  no pg_hba.conf entry for host "[local]", user "postgres", database "postgres", SSL off`. This was caused because the Harbor Operator hardcoded the [pg_hba.config](https://github.com/goharbor/harbor-operator/blob/master/pkg/cluster/controllers/database/generate.go#L94) and 
     it doesn't include the `postgres` user access to make replications. 
 
    `Solution:` `This is a possible solution that needs to be pushed upstream`.
