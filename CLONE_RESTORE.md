@@ -87,5 +87,3 @@ While this should work as it is, we encountered some bottlenecks as we implement
     - hostssl all             +zalandos    all                pam
     - hostssl all             all                all                md5
    ```
-   
-3. 
