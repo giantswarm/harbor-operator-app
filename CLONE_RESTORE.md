@@ -110,8 +110,10 @@ data:
    2. Create a txt file that holds your AWS secretkey and create a kubernetes secret using the file
       `kubectl create secret -n harbor-cluster generic secretkey --from-file=secret=./password.txt`
    3. You can use this reference manifest file to configure the harbor cluster and it's dependencies [here](https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A)
+   4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
+   5. Delete the `harbor-operator-postgres-operator-*` pod in the `harbor-operator-ns` namespace and wait for the pods to be recreated.
 
-You can confirm if backups are being created by running `envdir /run/etc/wal-e.d/env wal-g backup-list` in the postgres pod created, you'll see a list of backups in s3
+To confirm if backups are being created by run `envdir /run/etc/wal-e.d/env wal-g backup-list` in the postgres pod created, you'll see a list of backups in s3
 
 <h2> Restoring backups from s3 using the clone method </h2>
 Although using an in-cluster database configuration that Harbor operator manages has its advantages, it also comes with a few disadvantages, a major one being some of the configurable
@@ -151,7 +153,7 @@ In other to restore backups from s3 these are the steps to follow:
 3. You can use this reference manifest file to configure the harbor cluster and it's dependencies [here](https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A)
 4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
 5. Delete the `harbor-operator-postgres-operator-*` pod in the `harbor-operator-ns` namespace and wait for the pods to be recreated.
-6. Go to the configured harbor url to confirm your old data has been restored 
+6. Go to the configured harbor url (set as externalURL in the HarborCluster CR) to confirm your old data has been restored 
 
 <h2> Challenges faced while implementing this solution with Harbor Operator</h2>
 While this should work as it is, we encountered some bottlenecks as we implemented the solution. I'll list them and also mention ways we mitigated them
@@ -177,6 +179,8 @@ While this should work as it is, we encountered some bottlenecks as we implement
     - local   all             all                                   trust
     - local   replication     postgres                    trust
     - hostssl replication     postgres all                md5
+    - local   replication     standby                    trust
+    - hostssl replication     standby all                md5
     - hostssl all             +zalandos    all                pam
     - hostssl all             all                all                md5
    ```
