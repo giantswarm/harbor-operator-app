@@ -193,3 +193,8 @@ While this should work as it is, we encountered some bottlenecks as we implement
 
    `Solution: ` The "CLONE_AWS_ENDPOINT" environment variable affects the s3 path so remove it if you have it
 
+
+### Post Recovery Options
+
+After a database has been recovered successfully from a backup from s3, the CLONE parameters can be removed from the `pod-config` configmap or left alone, this is because the postgresql service will always pick the
+latest data available regardless if the CLONE parameters are specified or not.
