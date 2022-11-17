@@ -1,7 +1,8 @@
-# Creating and Restoring in-cluster Postgres Database Backups in Harboor
+# Creating and Restoring in-cluster Postgres Database Backups in Harbor
 
 ## Why do we want to create backups
-- To be able to recover harbor indexed data in case of disaster so we can still have the list of cached artifacts stored in harbor
+
+To be able to recover harbor indexed data in case of disaster so we can still have the list of cached artifacts stored in harbor
 
 There are currently two ways to configure a database in harbor
 1. Standard database configurations can be used to set the existing pre-deployed or cloud database services as the dependent database of the deploying Harbor.
@@ -117,7 +118,7 @@ Follow these steps to create a harbor cluster with backup enabled on a GiantSwar
       ```
    3. You can use this [reference manifest file] (https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A) to configure the harbor cluster and it's dependencies.
    4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
-   5. The `pg_hba` rules need to be updated within the `postgresql.acid.zalan.do` object. Creaye the following patch file:
+   5. The `pg_hba` rules need to be updated within the `postgresql.acid.zalan.do` object. Create the following patch file:
 
       _postgresql-patch.yaml_
       ```yaml
@@ -196,7 +197,7 @@ In order to restore backups from s3, follow the steps below:
    ```
 3. You can use this [reference manifest file](https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A) to configure the harbor cluster and its dependencies.
 4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
-5. The `pg_hba` rules need to be updated within the `postgresql.acid.zalan.do` object. Creaye the following patch file:
+5. The `pg_hba` rules need to be updated within the `postgresql.acid.zalan.do` object. Create the following patch file:
 
    _postgresql-patch.yaml_
    ```yaml
