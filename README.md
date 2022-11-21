@@ -48,6 +48,10 @@ workload cluster `abc12`:
 # user-values-configmap.yaml
 
 ```
+## Configuring with Backup
+
+For an installation guide with backups enabled see [Installing harbor-operator-app with S3 Backups using WALG](docs/CONFIGURE_POSTGRES_S3_BACKUP.md#installing-harbor-operator-app-with-s3-backups-using-walg)
+
 
 See our [full reference on how to configure apps](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
 
