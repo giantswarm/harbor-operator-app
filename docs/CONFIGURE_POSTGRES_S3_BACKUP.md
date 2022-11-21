@@ -103,7 +103,7 @@ Follow these steps to create a harbor cluster with backup enabled on a GiantSwar
       ```sh
       kubectl create secret -n harbor-cluster generic secretkey --from-file=secret=./password.txt
       ```
-   3. You can use this [reference manifest file] (https://docs.google.com/document/d/1g1sKP0fG-2qC9aLRfdMv75zJZ_B-S3I1B3upeBKgu0A) to configure the harbor cluster and it's dependencies.
+   3. Configure a harbor cluster and its dependencies ([here](../config/samples/harbor-cluster-configuration.yaml) is an example manifest).
    4. At this point, the pods will fail, reference problem 2 under the "Challenges faced while implementing this solution with Harbor Operator" to resolve it.
    5. The `pg_hba` rules need to be updated within the `postgresql.acid.zalan.do` object. Create the following patch file:
 
