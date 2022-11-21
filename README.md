@@ -1,17 +1,9 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/{APP-NAME}.svg?style=shield)](https://circleci.com/gh/giantswarm/{APP-NAME})
+# harbor-operator-app chart
 
-[Read me after cloning this template (GS staff only)](https://intranet.giantswarm.io/docs/dev-and-releng/app-developer-processes/adding_app_to_appcatalog/)
+[![CircleCI](https://circleci.com/gh/giantswarm/harbor-operator-app.svg?style=shield)](https://circleci.com/gh/giantswarm/harbor-operator-app)
 
-# {APP-NAME} chart
-
-Giant Swarm offers a {APP-NAME} App which can be installed in workload clusters.
-Here we define the {APP-NAME} chart with its templates and default configuration.
-
-**What is this app?**
-
-**Why did we add it?**
-
-**Who can use it?**
+Giant Swarm offers a harbor-operator-app App which can be installed in workload clusters.
+Here we define the harbor-operator-app chart with its templates and default configuration.
 
 ## Installing
 
@@ -26,8 +18,27 @@ There are several ways to install this app onto a workload cluster.
 
 **This is an example of a values file you could upload using our web interface.**
 
+Define a `configmap` which specifies the values required.
+
 ```yaml
-# values.yaml
+installCRDs: true
+redis-operator:
+  enabled: true
+minio-operator:
+  enabled: false
+postgres-operator:
+  enabled: true
+  image:
+    tag: v1.8.2
+  configGeneral:
+    docker_image: registry.opensource.zalan.do/acid/spilo-14:2.1-p7
+  configKubernetes:
+    secret_name_template: "{username}.{cluster}.credentials"
+    enable_pod_antiaffinity: "true"
+    pod_environment_configmap: "harbor-operator-ns/pod-config"
+  configAwsOrGcp:
+    aws_region: <bucket-region>
+    wal_s3_bucket: <s3-bucket-name>
 
 ```
 
@@ -41,11 +52,55 @@ workload cluster `abc12`:
 
 ```yaml
 # appCR.yaml
+apiVersion: application.giantswarm.io/v1alpha1
+kind: App
+metadata:
+  labels:
+    app-operator.giantswarm.io/version: 0.0.0
+    app.kubernetes.io/name: harbor-operator
+  name: harbor-operator
+  namespace: giantswarm
+spec:
+  catalog: giantswarm-playground-test
+  kubeConfig:
+    inCluster: true
+  name: harbor-operator
+  namespace: harbor-operator-ns
+  userConfig:
+    configMap:
+      name: "harbor-operator-user-values" # This should be the same as the name of the configmap created in step 1
+      namespace: "harbor-operator-ns"
+  version: <harbor-operator-version>
 
 ```
 
 ```yaml
 # user-values-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-operator-user-values
+  namespace: harbor-operator-ns
+data:
+  values: |
+    installCRDs: true
+    redis-operator:
+      enabled: true
+    minio-operator:
+      enabled: false
+    postgres-operator:
+      enabled: true
+      image:
+        tag: v1.8.2
+      configGeneral:
+        docker_image: registry.opensource.zalan.do/acid/spilo-14:2.1-p7
+      configKubernetes:
+        secret_name_template: "{username}.{cluster}.credentials"
+        enable_pod_antiaffinity: "true"
+        pod_environment_configmap: "harbor-operator-ns/pod-config"
+      configAwsOrGcp:
+        aws_region: <bucket-region>
+        wal_s3_bucket: <s3-bucket-name>
 
 ```
 
@@ -66,4 +121,4 @@ Not following these limitations will most likely result in a broken deployment.
 
 ## Credit
 
-- {APP HELM REPOSITORY}
+- [harbor-operator](https://github.com/goharbor/harbor-operator/blob/master/charts/harbor-operator/Chart.yaml)
