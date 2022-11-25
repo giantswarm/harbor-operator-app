@@ -1,0 +1,31 @@
+{{- if or (eq .Values.postgres-operator.backup.enabled true) (eq.Values.postgres-operator.restore.enabled true) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels: {{- include "chart.labels" . | nindent 4 }}
+  name: 'pod-config'
+  namespace: {{ .Release.Namespace | quote }}
+data:
+  {{- if eq .Values.postgres-operator.backup.enabled true }}
+    USE_WALG_BACKUP: "true"
+    WALG_DISABLE_S3_SSE: "true"
+    WALE_DISABLE_S3_SSE: "true"
+    NUMBER_OF_BACKUPS_TO_RETAIN: {{ .Values.postgres-operator.backup.number_of_backups_to_retain | quote }}
+    BACKUP_SCHEDULE: {{ .Values.postgres-operator.backup.backup_schedule | quote }}
+    AWS_REGION: {{ .Values.postgres-operator.backup.aws.region | quote }}
+  {{- end }}
+
+  {{- if eq .Values.postgres-operator.restore.enabled true }}
+    USE_WALG_RESTORE: "true"
+    USEWALG_RESTORE: "true"
+    CLONE_PORT: "5432"
+    CLONE_USER: "postgres"
+    CLONE_METHOD: "CLONE_WITH_WALE"
+    CLONE_USE_WALG_RESTORE: "true"
+    CLONE_SCOPE: {{ .Values.postgres-operator.restore.scope | quote }}
+    CLONE_HOST: {{ .Values.postgres-operator.restore.host | quote }}
+    CLONE_WAL_S3_BUCKET: {{ .Values.postgres-operator.restore.bucket | quote }}
+    CLONE_WAL_BUCKET_SCOPE_SUFFIX: {{ .Values.postgres-operator.restore.scope_suffix | quote }}
+    CLONE_AWS_REGION: {{ .Values.postgres-operator.restore.aws.region | quote }}
+  {{- end }}
+{{- end }}

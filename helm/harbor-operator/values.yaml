@@ -265,3 +265,33 @@ postgres-operator:
 
   configKubernetes:
     secret_name_template: "{username}.{cluster}.credentials"
+
+  backup:
+    # postgres-operator.backup.enabled -- Whether to enabled [Postgres operator backup](https://github.com/zalando/postgres-operator)
+    enabled: false
+
+    number_of_backups_to_retain: 5
+    # postgres-operator.backup.number_of_backups_to_retain -- Number of backups to retain
+    backup_schedule: ""
+    # postgres-operator.backup.bucket -- Bucket name to store backups
+    bucket: ""
+    aws:
+      accessKeyID: ""
+      region: ""
+      secretKey: ""
+
+  restore:
+    # postgres-operator.restore.enabled -- Whether to enabled [Postgres operator restore](https://github.com/zalando/postgres-operator)
+    enabled: false
+    # postgres-operator.restore.scope -- Name of the source cluster
+    scope: ""
+    # postgres-operator.restore.scope_suffix -- ID of the source cluster
+    scope_suffix: ""
+    # postgres-operator.restore.host -- Name of the source cluster (Same as scope)
+    host: ""
+    # postgres-operator.restore.bucket -- Bucket name source cluster stores backups
+    bucket: ""
+    aws:
+      accessKeyID: ""
+      region: ""
+      secretKey: ""
