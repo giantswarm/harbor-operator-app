@@ -18,14 +18,28 @@ data:
   {{- if eq .Values.postgres-operator.restore.enabled true }}
     USE_WALG_RESTORE: "true"
     USEWALG_RESTORE: "true"
+    CLONE_USE_WALG_RESTORE: "true"
+    CLONE_METHOD: "CLONE_WITH_WALE"
+
+    CLONE_HOST: {{ .Values.postgres-operator.restore.host | quote }}
     CLONE_PORT: "5432"
     CLONE_USER: "postgres"
-    CLONE_METHOD: "CLONE_WITH_WALE"
-    CLONE_USE_WALG_RESTORE: "true"
+
     CLONE_SCOPE: {{ .Values.postgres-operator.restore.scope | quote }}
-    CLONE_HOST: {{ .Values.postgres-operator.restore.host | quote }}
-    CLONE_WAL_S3_BUCKET: {{ .Values.postgres-operator.restore.bucket | quote }}
     CLONE_WAL_BUCKET_SCOPE_SUFFIX: {{ .Values.postgres-operator.restore.scope_suffix | quote }}
-    CLONE_AWS_REGION: {{ .Values.postgres-operator.restore.aws.region | quote }}
+
+    {{- if .Values.postgres-operator.restore.aws.region }}
+      CLONE_AWS_REGION: {{ .Values.postgres-operator.restore.aws.region | quote }}
+    {{- else }}
+      CLONE_AWS_REGION: {{ .Values.postgres-operator.backup.aws.region | quote }}
+    {{- end }}
+
+    {{- if .Values.postgres-operator.restore.bucket }}
+      CLONE_WAL_S3_BUCKET: {{ .Values.postgres-operator.restore.bucket | quote }}
+    {{- else }}
+      CLONE_WAL_S3_BUCKET: {{ .Values.postgres-operator.configAwsOrGcp.wal_s3_bucket | quote }}
+    {{- end }}
+
   {{- end }}
 {{- end }}
+
