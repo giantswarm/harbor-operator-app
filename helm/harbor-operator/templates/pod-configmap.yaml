@@ -1,4 +1,4 @@
-{{- if or (eq .Values.postgres_operator.backup.enabled true) (eq.Values.postgres_operator.restore.enabled true) }}
+{{- if or (eq .Values.postgres_operator.backup.enabled true) (eq .Values.postgres_operator.restore.enabled true) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -28,17 +28,17 @@ data:
     CLONE_SCOPE: {{ .Values.postgres_operator.restore.scope | quote }}
     CLONE_WAL_BUCKET_SCOPE_SUFFIX: {{ .Values.postgres_operator.restore.scope_suffix | quote }}
 
-    {{- if .Values.postgres_operator.restore.aws.region }}
-      CLONE_AWS_REGION: {{ .Values.postgres_operator.restore.aws.region | quote }}
-    {{- else }}
-      CLONE_AWS_REGION: {{ .Values.postgres_operator.backup.aws.region | quote }}
-    {{- end }}
+  {{- if .Values.postgres_operator.restore.aws.region }}
+    CLONE_AWS_REGION: {{ .Values.postgres_operator.restore.aws.region | quote }}
+  {{- else }}
+    CLONE_AWS_REGION: {{ .Values.postgres_operator.backup.aws.region | quote }}
+  {{- end }}
 
-    {{- if .Values.postgres_operator.restore.bucket }}
-      CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.restore.bucket | quote }}
-    {{- else }}
-      CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.configAwsOrGcp.wal_s3_bucket | quote }}
-    {{- end }}
+  {{- if .Values.postgres_operator.restore.bucket }}
+    CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.restore.bucket | quote }}
+  {{- else }}
+    CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.configAwsOrGcp.wal_s3_bucket | quote }}
+  {{- end }}
 
   {{- end }}
 {{- end }}
