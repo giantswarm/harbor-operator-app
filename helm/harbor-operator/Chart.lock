@@ -2,10 +2,10 @@ dependencies:
 - name: operator
   repository: file://charts/operator
   version: 4.4.28
-- name: redisOperator
+- name: redis-operator
   repository: file://charts/redis-operator
   version: 3.1.4
-- name: postgres_operator
+- name: postgres-operator
   repository: file://charts/postgres-operator
   version: 1.8.2
 digest: sha256:f05ca5be400ddb6a18e9ad83f73340d54a931045ad87879aae99ecca3a09759f

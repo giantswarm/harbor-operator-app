@@ -22,17 +22,17 @@ icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.
 dependencies:
 - name: operator
   version: 4.4.28
-  condition: minio-operator.enabled
+  condition: minio_operator.enabled
   repository: file://charts/operator
   tags:
     - storage
-- name: redisOperator
+- name: redis-operator
   version: 3.1.4
-  condition: redis-operator.enabled
+  condition: redis_operator.enabled
   repository: file://charts/redis-operator
   tags:
     - cache
-- name: postgres_operator
+- name: postgres-operator
   version: 1.8.2
   condition: postgres_operator.enabled
   repository: file://charts/postgres-operator
