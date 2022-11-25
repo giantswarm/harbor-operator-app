@@ -8,5 +8,5 @@ dependencies:
 - name: postgres-operator
   repository: file://charts/postgres-operator
   version: 1.8.2
-digest: sha256:f05ca5be400ddb6a18e9ad83f73340d54a931045ad87879aae99ecca3a09759f
-generated: "2022-11-25T17:30:38.298339+01:00"
+digest: sha256:a55a6f9d3dd46724f1dc4399ba79e17e969601920303fdb3ea8b281bbcafd406
+generated: "2022-11-25T18:01:00.771495+01:00"
