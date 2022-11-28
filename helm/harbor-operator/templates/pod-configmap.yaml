@@ -1,4 +1,4 @@
-{{- if or (eq .Values.postgres_operator.backup.enabled true) (eq .Values.postgres_operator.restore.enabled true) }}
+{{- if or (eq (index .Values "postgres-operator" "backup" "enabled") true) (eq (index .Values "postgres-operator" "restore" "enabled") true) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,38 +6,38 @@ metadata:
   name: 'pod-config'
   namespace: {{ .Release.Namespace | quote }}
 data:
-  {{- if eq .Values.postgres_operator.backup.enabled true }}
+  {{- if (eq (index .Values "postgres-operator" "backup" "enabled") true) }}
     USE_WALG_BACKUP: "true"
     WALG_DISABLE_S3_SSE: "true"
     WALE_DISABLE_S3_SSE: "true"
-    NUMBER_OF_BACKUPS_TO_RETAIN: {{ .Values.postgres_operator.backup.number_of_backups_to_retain | quote }}
-    BACKUP_SCHEDULE: {{ .Values.postgres_operator.backup.backup_schedule | quote }}
-    AWS_REGION: {{ .Values.postgres_operator.backup.aws.region | quote }}
+    NUMBER_OF_BACKUPS_TO_RETAIN: {{ index .Values "postgres-operator" "backup" "number_of_backups_to_retain" | quote }}
+    BACKUP_SCHEDULE: {{ index .Values "postgres-operator" "backup" "backup_schedule" | quote }}
+    AWS_REGION: {{ index .Values "postgres-operator" "backup" "aws" "region" | quote }}
   {{- end }}
 
-  {{- if eq .Values.postgres_operator.restore.enabled true }}
+  {{- if index .Values "postgres-operator" "restore" "enabled" }}
     USE_WALG_RESTORE: "true"
     USEWALG_RESTORE: "true"
     CLONE_USE_WALG_RESTORE: "true"
     CLONE_METHOD: "CLONE_WITH_WALE"
 
-    CLONE_HOST: {{ .Values.postgres_operator.restore.host | quote }}
+    CLONE_HOST: {{ index .Values "postgres-operator" "restore" "host" | quote }}
     CLONE_PORT: "5432"
     CLONE_USER: "postgres"
 
-    CLONE_SCOPE: {{ .Values.postgres_operator.restore.scope | quote }}
-    CLONE_WAL_BUCKET_SCOPE_SUFFIX: {{ .Values.postgres_operator.restore.scope_suffix | quote }}
+    CLONE_SCOPE: {{ index .Values "postgres-operator" "restore" "scope" | quote }}
+    CLONE_WAL_BUCKET_SCOPE_SUFFIX: {{ index .Values "postgres-operator" "restore" "scope_suffix" | quote }}
 
-  {{- if .Values.postgres_operator.restore.aws.region }}
-    CLONE_AWS_REGION: {{ .Values.postgres_operator.restore.aws.region | quote }}
+  {{- if index .Values "postgres-operator" "restore" "aws" "region" }}
+    CLONE_AWS_REGION: {{ index .Values "postgres-operator" "restore" "aws" "region" | quote }}
   {{- else }}
-    CLONE_AWS_REGION: {{ .Values.postgres_operator.backup.aws.region | quote }}
+    CLONE_AWS_REGION: {{ index .Values "postgres-operator" "restore" "aws" "region" | quote }}
   {{- end }}
 
-  {{- if .Values.postgres_operator.restore.bucket }}
-    CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.restore.bucket | quote }}
+  {{- if index .Values "postgres-operator" "restore" "bucket" }}
+    CLONE_WAL_S3_BUCKET: {{ index .Values "postgres-operator" "restore" "bucket" | quote }}
   {{- else }}
-    CLONE_WAL_S3_BUCKET: {{ .Values.postgres_operator.configAwsOrGcp.wal_s3_bucket | quote }}
+    CLONE_WAL_S3_BUCKET: {{ index .Values "postgres-operator" "restore" "configAwsOrGcp" "wal_s3_bucket" | quote }}
   {{- end }}
 
   {{- end }}

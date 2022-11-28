@@ -249,7 +249,7 @@ tolerations: []
 # }`
 affinity: {}
 
-redis_operator:
+redis-operator:
   # redis-operator.enabled -- Whether to enabled [Redis Operator](https://github.com/spotahome/redis-operator)
   enabled: false
   image:
@@ -259,21 +259,21 @@ minio_operator:
   # minio-operator.enabled -- Whether to enabled [MinIO Operator](https://github.com/minio/operator)
   enabled: false
 
-postgres_operator:
-  # postgres_operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
+postgres-operator:
+  # postgres-operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
   enabled: false
 
   configKubernetes:
     secret_name_template: "{username}.{cluster}.credentials"
 
   backup:
-    # postgres_operator.backup.enabled -- Whether to enabled [Postgres operator backup](https://github.com/zalando/postgres-operator)
+    # postgres-operator.backup.enabled -- Whether to enabled [Postgres operator backup](https://github.com/zalando/postgres-operator)
     enabled: false
 
     number_of_backups_to_retain: 5
-    # postgres_operator.backup.number_of_backups_to_retain -- Number of backups to retain
+    # postgres-operator.backup.number_of_backups_to_retain -- Number of backups to retain
     backup_schedule: ""
-    # postgres_operator.backup.bucket -- Bucket name to store backups
+    # postgres-operator.backup.bucket -- Bucket name to store backups
     bucket: ""
     aws:
       accessKeyID: ""
@@ -281,15 +281,15 @@ postgres_operator:
       secretKey: ""
 
   restore:
-    # postgres_operator.restore.enabled -- Whether to enabled [Postgres operator restore](https://github.com/zalando/postgres-operator)
+    # postgres-operator.restore.enabled -- Whether to enabled [Postgres operator restore](https://github.com/zalando/postgres-operator)
     enabled: false
-    # postgres_operator.restore.scope -- Name of the source cluster
+    # postgres-operator.restore.scope -- Name of the source cluster
     scope: ""
-    # postgres_operator.restore.scope_suffix -- ID of the source cluster
+    # postgres-operator.restore.scope_suffix -- ID of the source cluster
     scope_suffix: ""
-    # postgres_operator.restore.host -- Name of the source cluster (Same as scope)
+    # postgres-operator.restore.host -- Name of the source cluster (Same as scope)
     host: ""
-    # postgres_operator.restore.bucket -- Bucket name source cluster stores backups
+    # postgres-operator.restore.bucket -- Bucket name source cluster stores backups
     bucket: ""
     aws:
       accessKeyID: ""

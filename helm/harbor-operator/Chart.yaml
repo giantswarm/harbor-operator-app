@@ -28,13 +28,13 @@ dependencies:
     - storage
 - name: redis-operator
   version: 3.1.4
-  condition: redis_operator.enabled
+  condition: redis-operator.enabled
   repository: file://charts/redis-operator
   tags:
     - cache
 - name: postgres-operator
   version: 1.8.2
-  condition: postgres_operator.enabled
+  condition: postgres-operator.enabled
   repository: file://charts/postgres-operator
   tags:
     - database
