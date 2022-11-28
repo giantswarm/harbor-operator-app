@@ -22,7 +22,7 @@ icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.
 dependencies:
 - name: operator
   version: 4.4.28
-  condition: minio_operator.enabled
+  condition: minio-operator.enabled
   repository: file://charts/operator
   tags:
     - storage
