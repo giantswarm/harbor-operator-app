@@ -37,7 +37,7 @@ data:
   {{- if index .Values "postgres-operator" "restore" "bucket" }}
     CLONE_WAL_S3_BUCKET: {{ index .Values "postgres-operator" "restore" "bucket" | quote }}
   {{- else }}
-    CLONE_WAL_S3_BUCKET: {{ index .Values "postgres-operator" "restore" "configAwsOrGcp" "wal_s3_bucket" | quote }}
+    CLONE_WAL_S3_BUCKET: {{ index .Values "postgres-operator" "configAwsOrGcp" "wal_s3_bucket" | quote }}
   {{- end }}
 
   {{- end }}
