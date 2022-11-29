@@ -38,6 +38,31 @@ The harbor-operator-app requires the following to be present in the MC:
 5. Ingress
     The harbor-operator-app requires an Ingress to be present in the MC. The Ingress is used to create the ingress for the harbor instance.
     The Ingress must be of type `Ingress`. The notary and core services must be exposed via the ingress. 
+6. Cloud Provider Credentials (Optional)
+   When creating inCluster postgresql (Zlando/PostgreSQL) cluster with backup or restore functionality enabled, the credentials needed to connect to
+   the cloud provider can be set as secrets and referenced in the `harbor operator` app CR's configmap  E.g. 
+    ```
+    postgres-operator:
+      configKubernetes:
+        pod_environment_secret: "pod-secret"
+    ```
+   For AWS, the following secret is required:
+    ```
+    apiVersion: v1
+      kind: Secret
+        metadata:
+           name: pod-secret
+           namespace: same-namespace-as-harbor-cluster
+        type: Opaque
+          data:
+            AWS_ACCESS_KEY_ID: <base64 encoded AWS_ACCESS_KEY_ID>
+            AWS_SECRET_ACCESS_KEY: <base64 encoded AWS_SECRET_ACCESS_KEY>
+            CLONE_AWS_ACCESS_KEY_ID: <base64 encoded AWS_ACCESS_KEY_ID>
+            CLONE_AWS_SECRET_ACCESS_KEY: <base64 encoded AWS_SECRET_ACCESS_KEY>
+    ```
+    The secret must be present in the same namespace as the harbor cluster. 
+
+
 
 ### Pod Environment requirements
 The harbor-operator-app requires the following to be configured in the App CR referenced configmap for the following scenerios:
@@ -53,9 +78,7 @@ The harbor-operator-app requires the following to be configured in the App CR re
         # postgres-operator.backup.bucket -- Bucket name to store backups
         bucket: ""
         aws:
-          accessKeyID: ""
           region: ""
-          secretKey: ""
    ```
 2. When you want to restore a postgres db from a backup
    ```
@@ -72,9 +95,7 @@ The harbor-operator-app requires the following to be configured in the App CR re
        # postgres-operator.restore.bucket -- Bucket name source cluster stores backups
        bucket: ""
          aws:
-            accessKeyID: ""
             region: ""
-            secretKey: ""
    ```
 3. When you want to enable backups for a restored postgres db
    ```
@@ -85,9 +106,7 @@ The harbor-operator-app requires the following to be configured in the App CR re
          # harbor-operator.backup.bucket -- Bucket name to store backups
          bucket: ""
          aws:
-            accessKeyID: ""
             region: ""
-            secretKey: ""
      restore:
        enabled: true
        # harbor-operator.restore.bucket -- Bucket name to store backups
@@ -99,7 +118,5 @@ The harbor-operator-app requires the following to be configured in the App CR re
        # postgres-operator.restore.bucket -- Bucket name source cluster stores backups
        bucket: ""
          aws:
-            accessKeyID: ""
             region: ""
-            secretKey: ""
     ```
