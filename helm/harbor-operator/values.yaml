@@ -276,9 +276,7 @@ postgres-operator:
     # postgres-operator.backup.bucket -- Bucket name to store backups
     bucket: ""
     aws:
-      accessKeyID: ""
       region: ""
-      secretKey: ""
 
   restore:
     # postgres-operator.restore.enabled -- Whether to enabled [Postgres operator restore](https://github.com/zalando/postgres-operator)
