@@ -1,40 +1,14 @@
 apiVersion: v2
-name: harbor-operator
-description: Deploy Harbor Operator
-
-type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: [[ .Version ]]
-
-kubeVersion: '>= 1.16.0-0'
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 0.0.0-dev
-
-home: https://github.com/goharbor/harbor-operator
+name: harbor-operator
+home: https://github.com/giantswarm/harbor-operator-app
 icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.svg
-
+sources:
+- https://github.com/giantswarm/harbor-operator-app
+description: A helm chart for Harbor Operator
 dependencies:
-- name: operator
-  version: 4.4.28
-  condition: minio-operator.enabled
-  repository: file://charts/operator
-  tags:
-    - storage
-- name: redis-operator
-  version: 3.1.4
-  condition: redis-operator.enabled
-  repository: file://charts/redis-operator
-  tags:
-    - cache
-- name: postgres-operator
-  version: 1.8.2
-  condition: postgres-operator.enabled
-  repository: file://charts/postgres-operator
-  tags:
-    - database
+ - name: harbor-operator
+   version: v0.1.0
+type: application
+version: [[ .Version ]]
+kubeVersion: '>= 1.16.0-0'

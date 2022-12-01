@@ -1,0 +1,28 @@
+apiVersion: v2
+appVersion: 0.0.0-dev
+name: harbor-operator
+description: Deploy Harbor Operator
+type: application
+home: https://github.com/goharbor/harbor-operator
+icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.svg
+version: v0.1.0
+kubeVersion: '>= 1.16.0-0'
+dependencies:
+- name: operator
+  version: 4.4.28
+  condition: minio-operator.enabled
+  repository: file://charts/operator
+  tags:
+    - storage
+- name: redis-operator
+  version: 3.1.4
+  condition: redis-operator.enabled
+  repository: file://charts/redis-operator
+  tags:
+    - cache
+- name: postgres-operator
+  version: 1.8.2
+  condition: postgres-operator.enabled
+  repository: file://charts/postgres-operator
+  tags:
+    - database
