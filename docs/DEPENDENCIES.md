@@ -4,7 +4,7 @@
 In order to deploy the harbor-operator-app in a management cluster (MC), you need to have the following available:
 1. S3 Buckets: 
    Two buckets are required for harbor-operator-app to function properly: 
-     - One for storing the WAL backups(if you plan to backup the postgres db) and 
+     - One for storing the WAL backups(if you plan to back up the postgres db) and 
      - the other for storing harbor artifacts (Images, Charts etc.)
    It is advised to use separate buckets for the WAL backups and the artifacts. Also, the bucket(s) must be accessible by the MC.
 3. AWS Credentials
@@ -14,8 +14,6 @@ In order to deploy the harbor-operator-app in a management cluster (MC), you nee
     - S3:PutObject
     - S3:CreateObject
     - s3:GetBucket
-4. Subdomain
-    A subdomain is needed for the harbor-operator to create the ingress for the harbor instance. The subdomain must be accessible by the MC.
 
 ### Cluster requirements
 The harbor-operator-app requires the following to be present in the MC:

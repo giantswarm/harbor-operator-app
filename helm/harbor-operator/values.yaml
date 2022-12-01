@@ -292,6 +292,4 @@ postgres-operator:
     # postgres-operator.restore.bucket -- Bucket name source cluster stores backups
     bucket: ""
     aws:
-      accessKeyID: ""
       region: ""
-      secretKey: ""
