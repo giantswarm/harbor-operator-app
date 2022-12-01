@@ -33,7 +33,7 @@ dependencies:
   tags:
     - cache
 - name: postgres-operator
-  version: 1.6.3
+  version: 1.8.2
   condition: postgres-operator.enabled
   repository: file://charts/postgres-operator
   tags:
