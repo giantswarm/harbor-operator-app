@@ -13,6 +13,7 @@ image:
   registry: docker.io
 
 harbor-operator:
+  fullname: harbor-operator
   image:
     # image.repository -- The image repository whose default is the chart appVersion.
     repository: goharbor/harbor-operator
