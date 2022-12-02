@@ -1,0 +1,6 @@
+dependencies:
+- name: harbor-operator
+  repository: ""
+  version: 0.1.0
+digest: sha256:ead43991df5b7e405444e3b47a26b59d8e3f1e5ee2cff866e52b9840edd099fb
+generated: "2022-12-02T12:53:38.460154Z"

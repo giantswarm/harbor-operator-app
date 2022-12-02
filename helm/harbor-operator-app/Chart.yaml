@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: 0.0.0-dev
-name: harbor-operator
+name: harbor-operator-app
 home: https://github.com/giantswarm/harbor-operator-app
 icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.svg
 sources:
@@ -8,7 +8,7 @@ sources:
 description: A helm chart for Harbor Operator
 dependencies:
  - name: harbor-operator
-   version: v0.1.0
+   version: 0.1.0
 type: application
 version: [[ .Version ]]
 kubeVersion: '>= 1.16.0-0'

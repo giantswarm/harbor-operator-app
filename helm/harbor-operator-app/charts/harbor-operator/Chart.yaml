@@ -5,7 +5,7 @@ description: Deploy Harbor Operator
 type: application
 home: https://github.com/goharbor/harbor-operator
 icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.svg
-version: v0.1.0
+version: 0.1.0
 kubeVersion: '>= 1.16.0-0'
 dependencies:
 - name: operator

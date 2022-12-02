@@ -1,3 +1,17 @@
+# We install CRDs through a Job with the helm specific crd folder.
+crds:
+  install: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 750m
+      memory: 1024Mi
+
+image:
+  registry: docker.io
+
 harbor-operator:
   image:
     # image.repository -- The image repository whose default is the chart appVersion.
