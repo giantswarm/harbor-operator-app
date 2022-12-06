@@ -14,6 +14,15 @@ spec:
       labels: {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
       affinity: {{- toYaml .Values.affinity | nindent 8 }}
+      core:
+        metrics:
+          enabled: {{ .Values.controllers.core.metrics.enabled | quote}}
+      jobservice:
+        metrics:
+         enabled: {{ .Values.controllers.jobservice.metrics.enabled | quote}}
+      registry:
+        metrics:
+          enabled: {{ .Values.controllers.registry.metrics.enabled | quote}}
       containers:
       - args:
         - --enable-leader-election

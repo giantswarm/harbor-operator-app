@@ -81,6 +81,8 @@ controllers:
   core:
     # controllers.core.maxReconcile -- Max parallel reconciliation for Core controller
     maxReconcile: 1
+    metrics:
+      enabled: true
 
   harbor:
     # controllers.harbor.maxReconcile -- Max parallel reconciliation for Harbor controller
@@ -93,6 +95,8 @@ controllers:
   jobservice:
     # controllers.jobservice.maxReconcile -- Max parallel reconciliation for JobService controller
     maxReconcile: 1
+    metrics:
+      enabled: true
 
   notaryserver:
     # controllers.notaryserver.maxReconcile -- Max parallel reconciliation for NotaryServer controller
@@ -109,6 +113,8 @@ controllers:
   registry:
     # controllers.registry.maxReconcile -- Max parallel reconciliation for Registry controller
     maxReconcile: 1
+    metrics:
+      enabled: true
 
   registryctl:
     # controllers.registryctl.maxReconcile -- Max parallel reconciliation for RegistryCtl controller
