@@ -111,6 +111,28 @@ data:
       priority: 200
       value: {{ . | quote }}
     {{- end}}
+  
+  core-metrics.yaml |-
+    {{- with .Values.controllers.core.metrics.enabled}}
+    - key: enabled
+    priority: 200
+      value: {{ . | quote }}
+    {{- end}}
+  
+  registry-metrics.yaml |-
+  {{- with .Values.controllers.registry.metrics.enabled}}
+  - key: enabled
+  priority: 200
+    value: {{ . | quote }}
+  {{- end}}
+  
+  jobservice-metrics.yaml |-
+  {{- with .Values.controllers.jobservice.metrics.enabled}}
+  - key: enabled
+  priority: 200
+    value: {{ . | quote }}
+  {{- end}}
+
 ---
 apiVersion: v1
 kind: ConfigMap
