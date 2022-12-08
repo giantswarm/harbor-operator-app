@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    release: prometheus
+    role: alert-rules
+  name: prometheus-harbor-example-rules
+spec:
+  groups:
+  - name: harbor-alerts
+    rules:
+    - alert: harbor-inflight-alert
+      annotations:
+        description: Test
+        summary: Test
+      expr: registry_http_in_flight_requests == 0
+      for: 10s
+      labels:
+        severity: warning
+    - alert: InstanceDown
+      annotations:
+        description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+        summary: "Instance {{ $labels.instance }} down"
+      expr: harbor_up == 0
+      for: 5m
+      labels:
+        severity: page

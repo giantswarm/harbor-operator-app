@@ -1,0 +1,57 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: harbor-exporter
+  namespace: harbor-cluster
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  selector:
+    matchLabels:
+      goharbor.io/operator-controller: exporter
+  endpoints:
+  - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: harbor-core
+  namespace: harbor-cluster
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  selector:
+    matchLabels:
+      goharbor.io/operator-controller: core
+  endpoints:
+  - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: harbor-registry
+  namespace: harbor-cluster
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  selector:
+    matchLabels:
+      goharbor.io/operator-controller: registry
+  endpoints:
+  - port: metrics
+  
+# Metrics not exposed on jobservice pod
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: harbor-jobservice
+#   namespace: harbor-cluster
+#   labels:
+#     app.kubernetes.io/name: prometheus
+# spec:
+#   selector:
+#     matchLabels:
+#         goharbor.io/operator-controller: jobservice
+#   endpoints:
+#   - port: metrics
