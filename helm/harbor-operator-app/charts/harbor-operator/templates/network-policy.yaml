@@ -1,0 +1,26 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ include "chart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  egress:
+    - {}
+  ingress:
+    - ports:
+        - port: 8080
+          protocol: TCP
+        - port: 5000
+          protocol: TCP
+        - port: 5000
+          protocol: TCP
+        - port: 9443
+          protocol: TCP
+  policyTypes:
+    - Egress
+    - Ingress
