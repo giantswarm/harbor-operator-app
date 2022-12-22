@@ -75,3 +75,24 @@ Create the name of the service account to use
 {{- define "harbor-operator.CRDInstallSelector" -}}
 {{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
+
+{{/*
+Create a pod service account name.
+*/}}
+{{- define "postgres-pod.serviceAccountName" -}}
+{{ index .Values "harbor-operator" "postgres-operator" "podServiceAccount" "name" }}
+{{- end -}}
+
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define "postgres-operator.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "postgres-operator.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
