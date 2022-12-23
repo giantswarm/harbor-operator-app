@@ -279,6 +279,9 @@ harbor-operator:
     # postgres-operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
     enabled: false
 
+    podServiceAccount:
+      name: postgres-pod
+
     configKubernetes:
       secret_name_template: "{username}.{cluster}.credentials"
 
