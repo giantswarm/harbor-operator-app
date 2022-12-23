@@ -80,7 +80,7 @@ Create the name of the service account to use
 Create a pod service account name.
 */}}
 {{- define "postgres-pod.serviceAccountName" -}}
-{{ index .Values "harbor-operator" "postgres-operator" "podServiceAccount" "name" }}
+postgres-pod
 {{- end -}}
 
 {{/*
