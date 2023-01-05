@@ -5,7 +5,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "postgres-pod.serviceAccountName" . }}
+  name: test
 subjects:
   - kind: ServiceAccount
     name: {{ include "postgres-pod.serviceAccountName" . }}
