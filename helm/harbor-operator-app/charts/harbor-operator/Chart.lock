@@ -1,12 +1,12 @@
 dependencies:
 - name: operator
-  repository: file://charts/operator
+  repository: file://../operator
   version: 4.4.28
 - name: redis-operator
-  repository: file://charts/redis-operator
+  repository: file://../redis-operator
   version: 3.1.4
 - name: postgres-operator
-  repository: file://charts/postgres-operator
+  repository: file://../postgres-operator
   version: 1.8.2
 digest: sha256:178a5d2e6e3db021a33055bcfec30f00b1032c0533cecbf55b51fac9bf6cc4b1
 generated: "2022-09-13T20:08:26.248179+02:00"

@@ -1,0 +1,14 @@
+apiVersion: v2
+appVersion: 0.0.0-dev
+name: harbor-operator-app
+home: https://github.com/giantswarm/harbor-operator-app
+icon: https://branding.cncf.io/img/projects/harbor/icon/color/harbor-icon-color.svg
+sources:
+- https://github.com/giantswarm/harbor-operator-app
+description: A helm chart for Harbor Operator
+dependencies:
+ - name: harbor-operator
+   version: 0.1.0
+type: application
+version: [[ .Version ]]
+kubeVersion: '>= 1.16.0-0'
