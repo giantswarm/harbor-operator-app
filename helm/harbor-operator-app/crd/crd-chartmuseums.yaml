@@ -13,7 +13,7 @@ spec:
         caBundle: Cg==
         service:
           name: harbor-operator
-          namespace: harbor-operator
+          namespace: harbor-operator-ns
           path: /convert
       conversionReviewVersions:
       - v1
