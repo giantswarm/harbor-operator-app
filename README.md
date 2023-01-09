@@ -35,7 +35,7 @@ postgres-operator:
   configKubernetes:
     secret_name_template: "{username}.{cluster}.credentials"
     enable_pod_antiaffinity: "true"
-    pod_environment_configmap: "harbor-operator-ns/pod-config"
+    pod_environment_configmap: "harbor-operator/pod-config"
   configAwsOrGcp:
     aws_region: <bucket-region>
     wal_s3_bucket: <s3-bucket-name>
@@ -65,11 +65,11 @@ spec:
   kubeConfig:
     inCluster: true
   name: harbor-operator
-  namespace: harbor-operator-ns
+  namespace: harbor-operator
   userConfig:
     configMap:
       name: "harbor-operator-user-values" # This should be the same as the name of the configmap created in step 1
-      namespace: "harbor-operator-ns"
+      namespace: "harbor-operator"
   version: <harbor-operator-version>
 
 ```
@@ -80,7 +80,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: harbor-operator-user-values
-  namespace: harbor-operator-ns
+  namespace: harbor-operator
 data:
   values: |
     installCRDs: true
@@ -97,7 +97,7 @@ data:
       configKubernetes:
         secret_name_template: "{username}.{cluster}.credentials"
         enable_pod_antiaffinity: "true"
-        pod_environment_configmap: "harbor-operator-ns/pod-config"
+        pod_environment_configmap: "harbor-operator/pod-config"
       configAwsOrGcp:
         aws_region: <bucket-region>
         wal_s3_bucket: <s3-bucket-name>
