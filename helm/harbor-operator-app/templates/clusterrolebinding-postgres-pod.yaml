@@ -12,5 +12,5 @@ subjects:
     namespace: {{ .Release.Namespace | quote }}
   - kind: ServiceAccount
     name: default
-    namespace: {{ .Release.Namespace | quote }}
+    namespace: harbor-cluster
 
