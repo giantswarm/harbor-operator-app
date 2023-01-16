@@ -40,7 +40,7 @@ spec:
   kubeConfig:
     inCluster: true
   name: harbor-operator
-  namespace: harbor-operator-ns
+  namespace: harbor-operator
   userConfig:
     configMap:
       name: "harbor-operator-user-values"
