@@ -25,7 +25,7 @@ data:
 kind: ConfigMap
 metadata:
   name: harbor-operator-user-values
-  namespace: harbor-operator-ns
+  namespace: harbor-operator
 ---
 apiVersion: application.giantswarm.io/v1alpha1
 kind: App
@@ -44,6 +44,6 @@ spec:
   userConfig:
     configMap:
       name: "harbor-operator-user-values"
-      namespace: "harbor-operator-ns"
+      namespace: "harbor-operator"
   version: 0.0.0-a1333bd7599ddfa8f5c7fb6ce26dc777b84fa7b3
   ```
