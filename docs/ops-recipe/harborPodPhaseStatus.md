@@ -15,9 +15,9 @@ Likely you wont see this in the terminal and instead will receive the notificati
 
 ```
 
-> kubectl -n harbor-cluster delete pod harbor-exporter
+kubectl -n harbor-cluster delete pod harbor-exporter
 
-> kubectl -n harbor-cluster logs harbor-exporter
+kubectl -n harbor-cluster logs harbor-exporter
 
 ```
 
@@ -25,7 +25,7 @@ The error is likely to do with the connection to the exporter and other componen
 
 ```
 
-> kubectl -n harbor-cluster delete service harbor-exporter
+kubectl -n harbor-cluster delete service harbor-exporter
 
 ```
 
@@ -39,7 +39,7 @@ Check what the logs for the pod says:
 
 ```
 
-> kubectl -n harbor-cluster logs harbor-$COMPONENT
+kubectl -n harbor-cluster logs harbor-$COMPONENT
 
 ```
 
@@ -47,7 +47,7 @@ You can also describe the pod:
 
 ```
 
-> kubectl -n harbor-cluster describe pod harbor-$COMPONENT
+kubectl -n harbor-cluster describe pod harbor-$COMPONENT
 
 ```
 

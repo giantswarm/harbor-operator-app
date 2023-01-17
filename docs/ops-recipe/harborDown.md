@@ -10,21 +10,20 @@ First step would be to check if the pod is up and what the logs for the pod says
 
 ```
 
-> kubectl -n harbor-cluster logs harbor-$COMPONENT
+kubectl -n harbor-cluster logs harbor-$COMPONENT
 
 ```
 You can also describe the pod:
 
 ```
 
-> kubectl -n harbor-cluster describe pod harbor-$COMPONENT
+kubectl -n harbor-cluster describe pod harbor-$COMPONENT
 
 ```
 
 Based on what the logs say try to figure out what is causing the error. Usually it will be the result of an improper configuration. Most configuration for the cluster is created in the [fullstack.yaml](https://github.com/goharbor/harbor-operator/blob/master/manifests/samples/full_stack.yaml). Below are some things to look out for if you cannot find the cause. 
 
 **Secrets**
-
 
 - Check whether there is a a secret in the harbor-cluster namespace containing the AWS authentication for the the s3 bucket used for backups.
 
@@ -34,7 +33,6 @@ Based on what the logs say try to figure out what is causing the error. Usually 
 
 - Check that secrets exist for: redis, postgres, core, jobservice, notaryserver, notarysigner, registry and trivy.
 
-
 **Namespaces**
 
 - Ensure that the `harbor-operator-app` is created in the `harbor-operator` namespace. This is because helm relies on this for creation of some resources.
@@ -43,9 +41,7 @@ Based on what the logs say try to figure out what is causing the error. Usually 
 
 **Certificates**
 
-
 - Check that certificates have been properly issued. In the fullstack.yaml the clusterissuer should be set to `letsencrypt-giantswarm`.
-
 
 **Other**
 

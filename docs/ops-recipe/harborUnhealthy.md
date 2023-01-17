@@ -10,15 +10,15 @@ When a component of harbor if unhealthy it means it is failing healthchecks. Thi
 
 ```
 
-> kubectl -n harbor-cluster logs harbor-$COMPONENT
+kubectl -n harbor-cluster logs harbor-$COMPONENT
 
-> kubectl -n harbor-cluster describe pod harbor-$COMPONENT
+kubectl -n harbor-cluster describe pod harbor-$COMPONENT
 
-> kubectl -n harbor-cluster describe service harbor-$COMPONENT
+kubectl -n harbor-cluster describe service harbor-$COMPONENT
 
-> kubectl -n harbor-operator describe deployment harbor-$COMPONENT
+kubectl -n harbor-operator describe deployment harbor-$COMPONENT
 
-> kubectl -n harbor-operator describe statefulset harbor-$
+kubectl -n harbor-operator describe statefulset harbor-$COMPONENT
 
 
 ```
@@ -27,9 +27,9 @@ If you're trying to get a pod from a running to a ready state consider changing 
 
 ```
 
-> kubectl -n harbor-cluster edit pod harbor-$COMPONENT 
+kubectl -n harbor-cluster edit pod harbor-$COMPONENT 
 
-> Increase the time out period on the readiness probe to 60 seconds.
+Increase the time out period on the readiness probe to 60 seconds.
 
 ```
 
@@ -37,7 +37,7 @@ It may be worth checking the kubelet logs on the node to see if there is any inf
 
 ```
 
-> kubectl -n harbor-cluster get pods -owide
+kubectl -n harbor-cluster get pods -owide
 
 ```
 
@@ -45,7 +45,7 @@ Check what node the pod is associated with and SSH on to it. You can SSH onto th
 
 ```
 
-> cat /var/logs/syslog | grep harbor
+cat /var/logs/syslog | grep harbor
 
 ```
 
