@@ -78,6 +78,16 @@ Based on what the logs say try to figure out what is causing the error. Usually 
 - Check that the nginx ingress class has the following annotation:
   `ingressclass.kubernetes.io/is-default-class: "true"`
 
+- Check that the nginx ingress is assigned to the core and notary dns.
+```
+
+kubectl get ingress -n harbor-cluster
+
+kubectl edit ingress -n harbor-cluster harbor-cluster-harbor-habor
+
+```
+Under spec add: `ingressClassName: nginx`
+
 - Clean up any crds or resources left over from a previous deployment.
 
 - Check that your storage options have been configured correctly. Do they have enough memory? Are they pointing to the correct bucket? Do the credentials exist?
