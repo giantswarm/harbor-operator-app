@@ -10,3 +10,7 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "postgres-pod.serviceAccountName" . }}
     namespace: {{ .Release.Namespace | quote }}
+  - kind: ServiceAccount
+    name: default
+    namespace: harbor-cluster
+
