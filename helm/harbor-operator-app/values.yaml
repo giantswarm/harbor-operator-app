@@ -277,13 +277,29 @@ harbor-operator:
 
   postgres-operator:
     # postgres-operator.enabled -- Whether to enabled [Postgres operator](https://github.com/zalando/postgres-operator)
-    enabled: false
+    enabled: true
+    image:
+      tag: v1.8.2
+    
+    configGeneral:
+      docker_image: registry.opensource.zalan.do/acid/spilo-14:2.1-p7
 
     podServiceAccount:
       name: postgres-pod
 
     configKubernetes:
       secret_name_template: "{username}.{cluster}.credentials"
+      enable_pod_antiaffinity: "true"
+      pod_environment_configmap: "harbor-operator/pod-config"
+      pod_environment_secret: "pod-secret"
+    
+    configAwsOrGcp:
+      aws_region: eu-west-2
+    backup:
+      enabled: false
+    restore:
+      enabled: false
+    
 
     backup:
       # postgres-operator.backup.enabled -- Whether to enabled [Postgres operator backup](https://github.com/zalando/postgres-operator)

@@ -21,15 +21,15 @@ kubectl -n harbor-cluster logs harbor-exporter
 
 ```
 
-The error is likely to do with the connection to the exporter and other components being down. Try restarting the service. 
+The error is likely to do with the connection to the exporter and other components being down. Try restarting the the deployment. 
 
 ```
 
-kubectl -n harbor-cluster delete service harbor-exporter
+kubectl -n harbor-cluster delete deployment harbor-exporter
 
 ```
 
-If this doesn't work and you have explored other options a likely fix is to re-deploy harbor itself.
+If this doesn't work and you have explored other options a likely fix is to re-deploy harbor itself. As long as you have backups correctly configured to pull from your s3 bucket this should mean that images are correctly restored. Other data such as users assigned to projects will liekly be lost and need to be reconfigured. 
 
 **General**
 
@@ -59,9 +59,23 @@ Based on what the logs say try to figure out what is causing the error. Usually 
 
 - Check if the secret is referenced in your pods definition. This can be configured in your fullstack for launching harbor under: storage -> s3.
 
-- Check that the postgres-pod secret exists with the configurations for postgres correctly enabled. This exists as `pod-secret`.
+- Check that secrets exist for: 
 
-- Check that secrets exist for: redis, postgres, core, jobservice, notaryserver, notarysigner, registry and trivy.
+- harbor-core-secrets: `harbor-cluster-harbor-harbor-core`, `harbor-cluster-harbor-harbor-core-csrf`, `harbor-cluster-harbor-harbor-core-encryptionkey`, `harbor-cluster-harbor-harbor-core-secret`, `harbor-cluster-harbor-harbor-core-tokencert`.
+
+- harbor-jobservice-secret: `harbor-cluster-harbor-harbor-jobservice-secret`
+
+- harbor-notaryserver-secret: `harbor-cluster-harbor-harbor-notaryserver-authentication`
+
+- harbor-notarysigner-secrets: `harbor-cluster-harbor-harbor-notarysigner-authentication`, `harbor-cluster-harbor-harbor-notarysigner-authority`, `harbor-cluster-harbor-harbor-notarysigner-encryption-key`.
+
+- harbor-registry-secrets: `harbor-cluster-harbor-harbor-registry-basicauth`, `harbor-cluster-harbor-harbor-registry-http`
+
+- harbor-trivy-secret: `harbor-cluster-harbor-harbor-trivy`
+
+- harbor-redis-secret: `harbor-cluster-redis`
+
+- harbor-posthresql-secret: `harbor.postgresql-harbor-cluster-harbor-cluster.credentials`
 
 
 **Namespaces**
@@ -70,17 +84,50 @@ Based on what the logs say try to figure out what is causing the error. Usually 
 
 - Equally, ensure that the components are being created in the `harbor-cluster` namespace. This is because it is hardcoded into a rolebinding for PodSecurityPolicies.
 
+- These components will be deployments named: `harbor-cluster-harbor-harbor-chartmuseum`, `harbor-cluster-harbor-harbor-core`, `harbor-cluster-harbor-harbor-notaryserver`, `harbor-cluster-harbor-harbor-notarysigner`, `harbor-cluster-harbor-harbor-portal`, `harbor-cluster-harbor-harbor-registry`, `harbor-cluster-harbor-harbor-trivy`, `rfs-harbor-cluster-redis`.
+
 **Certificates**
 
 - Check that certificates have been properly issued. In the fullstack.yaml the clusterissuer should be set to `letsencrypt-giantswarm`.
 
+- The certificate should have the same name as you have given it in the `fullstack.yaml`.
+
+```
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sample-public-certificate
+  namespace: harbor-cluster
+spec:
+  secretName: sample-public-certificate
+  dnsNames:
+    - core.harbor.localhost
+    - notary.harbor.localhost
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+```
+
+- For exampel the above configuration should create a certificate called `sample-public-certificate`.
+
 **Other**
 
-- Check that the URL and DNS for core and notary are set correctly for the cluster you're working on in the fullstack.yaml.
+- Check that the URL and DNS for core and notary use the domain for the cluster you're working on in the fullstack.yaml.
+
+- You can find this by using the following command:
+
+```
+
+kubectl get ingress -A
+
+```
+- This will return all current ingresses for the cluster and the domain that they use. This domain will be the one you want to append to `core.harbor` and `notary.harbor`. For example Grizzly cluster would be: `core.harbor.happaapi.grizzly.gaws.gigantic.io`.
+
 
 - Check that the nginx ingress class has the following annotation:
   `ingressclass.kubernetes.io/is-default-class: "true"`
 
-- Clean up any crds or resources left over from a previous deployment.
+- Clean up any crds or resources left over from a previous deployment. This should be done automatically but if not you may get an error complaining that resources such as webhooks and endpoints already exist. Or that the current CRD you are trying to deploy doesn't match the one that already exists. 
 
 - Check that your storage options have been configured correctly. Do they have enough memory? Are they pointing to the correct bucket? Do the credentials exist?
+
