@@ -221,7 +221,7 @@ cat /var/logs/syslog | grep harbor
 
 **Certificates**
 
-- Check that certificates have been properly issued. In the fullstack.yaml the clusterissuer should be set to `letsencrypt-giantswarm`.
+- Check that certificates have been properly issued. In the `full_stack.yaml` the clusterissuer should be set to `letsencrypt-giantswarm`.
 
 - The certificate should have the same name as you have given it in the `full_stack.yaml`.
 
