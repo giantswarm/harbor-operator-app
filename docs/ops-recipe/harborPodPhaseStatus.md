@@ -29,7 +29,7 @@ kubectl -n harbor-cluster delete deployment harbor-exporter
 
 ```
 
-If this doesn't work and you have explored other options a likely fix is to re-deploy harbor itself. As long as you have backups correctly configured to pull from your s3 bucket this should mean that images are correctly restored. Other data such as users assigned to projects will liekly be lost and need to be reconfigured. 
+If this doesn't work and you have explored other options a likely fix is to re-deploy Harbor itself. As long as you have backups correctly configured to pull from your s3 bucket this should mean that images are correctly restored. Other data such as users assigned to projects will likely be lost and need to be reconfigured. 
 
 **General**
 
