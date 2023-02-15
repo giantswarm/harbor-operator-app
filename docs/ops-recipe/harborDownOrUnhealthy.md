@@ -12,6 +12,23 @@ When a component of Harbor is down it means that the pods are crashing off or fa
 
 When a component of Harbor is unhealthy it means it is failing healthchecks. This could mean that the component either is not running or is is not ready.
 
+Here is a list of the Harbor componenets and their functions:
+
+- Core: Handles api server requests and authentication. Configures system settings, projects, quotas and replication.
+
+- Job Service: General job execution queue service to let other components/services submit requests of running asynchronous tasks concurrently with simple restful APIs.
+
+- Chart Museum: a 3rd party chart repository server providing chart management and access APIs. To learn more details, check [here](https://chartmuseum.com/).
+
+- Notary: a 3rd party content trust server, responsible for securely publishing and verifying content. To learn more details, check [here](https://github.com/theupdateframework/notary).
+
+- Docker Registry: a 3rd party registry server, responsible for storing Docker images and processing Docker push/pull commands. As Harbor needs to enforce access control to images, the Registry will direct clients to a token service to obtain a valid token for each pull or push request.
+
+- Web Portal: a graphical user interface to help users manage images on the Registry
+
+See [here](https://github.com/goharbor/harbor/wiki/Architecture-Overview-of-Harbor) for a more detailed view of Harbors architecture.
+
+
 The first step is always to check the appropriate logs.
 
 ```
@@ -30,7 +47,9 @@ Harbor could crash off for a number of reasons related to the current state of y
 
 kubectl get pods -n harbor-cluster
 
-  
+```
+
+*Output:*
 
 harbor-cluster-harbor-harbor-chartmuseum-84bc57ff84-ntxtr 1/1 Running 0 11h
 
@@ -60,13 +79,12 @@ rfr-harbor-cluster-redis-0 1/1 Running 0 11h
 
 rfs-harbor-cluster-redis-745b9755dd-rnw4w 1/1 Running 0 2d3h
 
-```
 
 We can check the logs of the core component.
 
 `kubectl logs -n harbor-cluster harbor-cluster-harbor-harbor-core-576c845687-fvfgk`
 
-```
+*Output:*
 
 2023-02-01T10:24:10Z [INFO] [/common/dao/base.go:67]: Registering database: type-PostgreSQL host-postgresql-harbor-cluster-harbor-cluster.harbor-cluster.svc port-5432 database-core sslmode-"disable"
 
@@ -80,7 +98,6 @@ We can check the logs of the core component.
 
 2023-02-01T10:24:31Z [ERROR] [/common/utils/utils.go:108]: failed to connect to tcp://postgresql-harbor-cluster-harbor-cluster.harbor-cluster.svc:5432, retry after 2 seconds :dial tcp 172.31.45.132:5432: i/o timeout
 
-```
 
 By running:
 
@@ -88,11 +105,10 @@ By running:
 
 We can see that the logs show memory is full:
 
-```
+ *Output:*
 
 FATAL: could not write lock file "postmaster.pid": No space left on device
 
-```
 
 We can adjust the memory by altering the fullstack-deployment manifest and redeploying it.
 
@@ -211,6 +227,8 @@ cat /var/logs/syslog | grep harbor
 
 - harbor-posthresql-secret: `harbor.postgresql-harbor-cluster-harbor-cluster.credentials`
 
+These secrets will be created when harbor-operator is deployed and when the fullstack.yaml configuration is applied. If they do not exist check the deployment for the corresponding component and ensure it is working. 
+
 **Namespaces**
 
 - Ensure that the `harbor-operator-app` is created in the `harbor-operator` namespace. This is because helm relies on this specific namespace name for creation of some resources.
@@ -269,9 +287,12 @@ kubectl edit ingress -n harbor-cluster harbor-cluster-harbor-harbor-giantswarm
 
 - Check that the ingress class for harbor has: `ingressClassName: nginx` added underneath spec. If not add it like so:
 
+```
+
  spec:
     ingressClassName: nginx
 
+```
 - Deleting the harbor core pod may cause the ingress spec to lose the key value pair. It should be the first thing you check if you are getting 404.
 
 
