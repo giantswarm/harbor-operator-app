@@ -2,6 +2,8 @@
 
 ## Why?
 
+# This document is deprecated as we have configured the backups to connect to an external bucket using configmaps. Check the CONFIGURE_POSTGRES_S3_BUCKET.yaml fir further information.
+
 It is important as having a backed up database that allows us to index S3 and persist data between different harbor instances.
 
 ## Prerequisites
