@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
+### Added
+
+- Added `node-role.kubernetes.io/control-plane` to crd install jobs toleration
+
+### Changed
+
+- `app.giantswarm.io` label group was changed to `application.giantswarm.io`
 
 [Unreleased]: https://github.com/giantswarm/{APP-NAME}/tree/main
