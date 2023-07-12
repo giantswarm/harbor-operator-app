@@ -10,7 +10,7 @@ For a more comprehensive look at harbor it is recommended that you check out the
 
 ## Using Harbor as a proxy cache
 
-The primary way that we've agreed to use harbor is as a proxy cache, meaning it is just a means to pull images through. We've achieved this by creating containerd configuration for workload clusters which sets harbor as mirror registry and falls back to docker if it fails. This means that when you pull images through a workload cluster they should always attempt to use harbor first. In order to make this work for shortnames we had to set up an nginx proxy which rewrites urls from `giantswarm` to `giantswarm/giantswarm` due to the fact that harbor stores images as `projects/namespace`. This ingress is deployed as part of the [management-cluster-fleet](https://github.com/giantswarm/management-clusters-fleet/)
+The primary way that we've agreed to use harbor is as a proxy cache, meaning it is just a means to pull images through. We've achieved this by creating containerd configuration for workload clusters which sets harbor as mirror registry and falls back to docker if it fails. This means that when you pull images through a workload cluster they should always attempt to use harbor first. In order to make this work for shortnames we had to set up an NGINX proxy which rewrites urls from `giantswarm` to `giantswarm/giantswarm` due to the fact that harbor stores images as `projects/namespace`. This ingress is deployed as part of the [management-cluster-fleet](https://github.com/giantswarm/management-clusters-fleet/)
 
 ## Deployment
 
@@ -91,5 +91,3 @@ helm install harbor-operator --namespace harbor-operator -f ./values.yaml .
 - Harbor itelf seems to be a bit unstable and as of such pods might go down from time to time. As long as the core deployment is still up they should be able to recreate themselves in the correct state. This is important because core will hold a lot of the configuration that is set up for the application. (For example user permissions set by admins in UI). In the event that backups have to be used it cannot be garanteed that this data will also be restored, as S3 is used to store image blobs, with postgres acting like a "signpost" to them images.
 
 - Harbor contains funcitonality such as image signing and preheating which we didn't explore. It might be worth looking into these features in the future if you are going to use Harbor extensively.
-
-

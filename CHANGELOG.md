@@ -14,5 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `app.giantswarm.io` label group was changed to `application.giantswarm.io`
+- Docs: Rename `nginx-ingress-controller` to `ingress-nginx`. ([#105](https://github.com/giantswarm/harbor-operator-app/pull/105))
 
 [Unreleased]: https://github.com/giantswarm/{APP-NAME}/tree/main

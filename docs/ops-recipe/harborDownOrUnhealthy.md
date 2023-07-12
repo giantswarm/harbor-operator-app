@@ -288,14 +288,11 @@ kubectl edit ingress -n harbor-cluster harbor-cluster-harbor-harbor-giantswarm
 - Check that the ingress class for harbor has: `ingressClassName: nginx` added underneath spec. If not add it like so:
 
 ```
-
  spec:
     ingressClassName: nginx
-
 ```
+
 - Deleting the harbor core pod may cause the ingress spec to lose the key value pair. It should be the first thing you check if you are getting 404.
-
-
 
 - Check that the URL and DNS for core and notary use the domain for the cluster you're working on in the fullstack.yaml.
 
@@ -309,7 +306,7 @@ kubectl get ingress -A
 
 - This will return all current ingresses for the cluster and the domain that they use. This domain will be the one you want to append to `core.harbor` and `notary.harbor`. For example Grizzly cluster would be: `core.harbor.happaapi.grizzly.gaws.gigantic.io`.
 
-- Check that the nginx ingress class has the following annotation:
+- Check that the ingress class has the following annotation:
 
 `ingressclass.kubernetes.io/is-default-class: "true"`
 
