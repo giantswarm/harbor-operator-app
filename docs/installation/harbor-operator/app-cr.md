@@ -5,8 +5,10 @@ If you have access to the Kubernetes API on the management cluster, you could cr
 
 * cert-manager
 * Ingress controller
-* If you are using nginx ingress controller make sure you have annotated your ingressClass:
-  `ingressclass.kubernetes.io/is-default-class: "true"`
+* If you are using Ingress NGINX Controller make sure you have annotated your ingressClass:
+
+`ingressclass.kubernetes.io/is-default-class: "true"`
+
 <hr />
 
 Here is an example that would install the app to management cluster ginger:

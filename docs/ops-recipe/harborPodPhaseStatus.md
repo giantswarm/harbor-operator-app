@@ -121,13 +121,14 @@ spec:
 kubectl get ingress -A
 
 ```
+
 - This will return all current ingresses for the cluster and the domain that they use. This domain will be the one you want to append to `core.harbor` and `notary.harbor`. For example Grizzly cluster would be: `core.harbor.happaapi.grizzly.gaws.gigantic.io`.
 
 
-- Check that the nginx ingress class has the following annotation:
-  `ingressclass.kubernetes.io/is-default-class: "true"`
+- Check that the ingress class has the following annotation:
+
+`ingressclass.kubernetes.io/is-default-class: "true"`
 
 - Clean up any crds or resources left over from a previous deployment. This should be done automatically but if not you may get an error complaining that resources such as webhooks and endpoints already exist. Or that the current CRD you are trying to deploy doesn't match the one that already exists. 
 
 - Check that your storage options have been configured correctly. Do they have enough memory? Are they pointing to the correct bucket? Do the credentials exist?
-
